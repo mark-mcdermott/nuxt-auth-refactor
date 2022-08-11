@@ -7,5 +7,6 @@ Rails.application.routes.draw do
     devise_scope :user do
       get 'users/current', to: 'sessions#show'
     end
+    get 'finances/:user', to: 'finances#show'
   end
 end

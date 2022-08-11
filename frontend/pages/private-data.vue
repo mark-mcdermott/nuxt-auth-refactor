@@ -14,23 +14,34 @@
 import Title from '@/components/Title';
 export default {
   components: {Title},
+
+// ! ||--------------------------------------------------------------------------------||
+// ! ||                                      DATA                                      ||
+// ! ||--------------------------------------------------------------------------------||
+
   data() {
     return {
       title: 'Private Data',
-      data: []
+      data: [],
+      error: ''
     }
   },
+
+// ! ||--------------------------------------------------------------------------------||
+// ! ||                                     MOUNTED                                    ||
+// ! ||--------------------------------------------------------------------------------||
+
   mounted() {
     try {
-      this.$axios.$get('private_data')
-      .then((data) => {
-        this.data = data;
-      });
-      // this.$router.push('/')
+    this.$axios
+      .get('finances/1')
+      .then(response => (console.log(response)))
     } catch(e) {
       this.error = e + ''
     }
   }
+
+  
 }
 </script>
 
