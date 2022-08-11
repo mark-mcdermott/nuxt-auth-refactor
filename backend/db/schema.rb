@@ -10,26 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_27_223444) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_11_021053) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "account_types", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "accounts", force: :cascade do |t|
+    t.integer "account_type_id"
+    t.integer "user_id"
     t.string "name"
-    t.integer "account_type_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
   end
 
-  create_table "categories", force: :cascade do |t|
-    t.string "name", null: false
+  create_table "budgets", force: :cascade do |t|
+    t.integer "purchase_type_id"
+    t.integer "value"
+    t.string "subtitle"
+    t.string "notes"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -46,27 +50,37 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_27_223444) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "transactions", force: :cascade do |t|
-    t.date "date", null: false
-    t.text "description", null: false
-    t.string "amount", null: false
-    t.string "balance", null: false
+  create_table "public_data", force: :cascade do |t|
+    t.string "datum"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "category_id", null: false
-    t.integer "account_id", null: false
-    t.integer "user_id", null: false
-    t.index ["user_id"], name: "index_transactions_on_user_id"
+  end
+
+  create_table "purchase_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.integer "user_id"
+    t.datetime "date"
+    t.string "amount"
+    t.string "balance"
+    t.integer "purchase_type_id"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
