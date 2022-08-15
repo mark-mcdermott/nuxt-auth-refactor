@@ -34,8 +34,8 @@ export default {
   mounted() {
     try {
     this.$axios
-      .get('finances/1')
-      .then(response => (console.log(response)))
+      // .get('finances/1')
+      // .then(response => (console.log(response)))
     } catch(e) {
       this.error = e + ''
     }
